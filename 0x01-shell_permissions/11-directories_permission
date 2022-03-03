@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod -R d ugo=+x {} \
+-type d exec chmod -R ugo=+x {} \
