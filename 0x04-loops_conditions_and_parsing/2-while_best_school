@@ -2,7 +2,7 @@
 # This script is displaying "Best School" 10 times
 
 j=10;
-while (("$j" > 0));
+while ((j>0));
 	do echo "Best School";
 		j=$((j-1));
 done;
