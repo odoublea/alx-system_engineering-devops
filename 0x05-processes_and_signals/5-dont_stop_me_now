@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Bash script to terminate an infinite process
 
-kill -15 PID
+kill -15
