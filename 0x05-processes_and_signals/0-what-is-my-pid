@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This Bash script displays its own PID
 
-echo $PPID
+echo $$
