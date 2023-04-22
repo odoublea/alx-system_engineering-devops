@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
-ssh-copy-id ubuntu@54.165.180.170
 cat ~/.ssh/school | ssh ubuntu@54.165.180.170 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
-ssh ubuntu@54.165.180.170
