@@ -2,43 +2,39 @@
 
 class nginx {
   package { 'nginx':
-    ensure => installed,
-  }
-
-  service { 'nginx':
-    ensure => running,
-    enable => true,
-  }
-
-  file { '/var/www/html/index.html':
     ensure => present,
-    content => "Hello World!\n",
   }
 
   file { '/etc/nginx/sites-available/default':
-    ensure => present,
+    ensure => file,
     content => "
       server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        server_name _;
-        root /var/www/html;
-        index index.html;
+        listen 80;
+        server_name localhost;
+        location / {
+          return 200 'Hello World!';
+        }
         location /redirect_me {
-          return 301 /;
+          return 301 /new_location;
+        }
+        location /new_location {
+          return 200 'You have been redirected!';
         }
       }
     ",
+    require => Package['nginx'],
   }
 
   file { '/etc/nginx/sites-enabled/default':
     ensure => 'link',
     target => '/etc/nginx/sites-available/default',
+    require => File['/etc/nginx/sites-available/default'],
   }
 
-  exec { 'nginx_reload':
-    command     => '/usr/sbin/service nginx reload',
-    refreshonly => true,
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+    require => Package['nginx'],
   }
 }
 
