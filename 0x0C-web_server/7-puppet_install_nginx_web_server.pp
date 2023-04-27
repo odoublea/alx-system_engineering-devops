@@ -1,11 +1,45 @@
-# Install Nginx Server
+# Install Nginx Server with Puppet
 
-exec {'install':
-provider => shell,
-command  => 'sudo apt-get -y update;
-	     sudo apt-get -y install nginx;
-	     echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ;
-	     sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/odoublea permanent;/"
-	     /etc/nginx/sites-available/default; 
-	     sudo service nginx start',
+class nginx {
+  package { 'nginx':
+    ensure => installed,
+  }
+
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+  }
+
+  file { '/var/www/html/index.html':
+    ensure => present,
+    content => "Hello World!\n",
+  }
+
+  file { '/etc/nginx/sites-available/default':
+    ensure => present,
+    content => "
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+        root /var/www/html;
+        index index.html;
+        location /redirect_me {
+          return 301 /;
+        }
+      }
+    ",
+  }
+
+  file { '/etc/nginx/sites-enabled/default':
+    ensure => 'link',
+    target => '/etc/nginx/sites-available/default',
+  }
+
+  exec { 'nginx_reload':
+    command     => '/usr/sbin/service nginx reload',
+    refreshonly => true,
+  }
 }
+
+include nginx
