@@ -5,7 +5,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt-get install -y nginx
 
 # Configure Nginx to listen on port 80
-sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/odoublea permanent;/" /etc/nginx/sites-available/default
+sudo sed -i 'listen 80 default_server/a rewrite ^/redirect_me https://github.com/odoublea/ permanent;' /etc/nginx/sites-available/default
 
 #Restart Nginx server
 sudo service nginx restart
