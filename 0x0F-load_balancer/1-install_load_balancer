@@ -2,34 +2,19 @@
 # Install and configure HAproxy on load-balancer
 
 sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get install --no-install-recommends software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-2.6
-apt-get install haproxy=2.6.\*
+sudo apt-get install --no-install-recommends software-properties-common -y
+sudo add-apt-repository ppa:vbernat/haproxy-2.6 -y
+sudo apt-get install haproxy=2.6.\* -y
 
-sudo service enable haproxy
+sudo bash -c 'cat << EOT >> /etc/haproxy/haproxy.cfg
 
-sudo bash -c 'cat << EOF >
-/etc/haproxy/haproxy.cfg
-global
-	log /dev/log local0
-	log /dev/log local1 notice
-	chroot /var/lib/haproxy
-	stats timeout 30s
-defaults
-	log global
-	mode http
-	option httplog
-	option dontlognull
-	timeout connect 5000
-	timeout client 50000
-	timeout server 50000
 frontend http-in
-	bind *:80
-	default_backend servers
+        bind *:80
+        default_backend servers
 backend servers
-	balance roundrobin
-	server web-01 26887-web-01 check
-	server web-02 26887-web-02
-EOF'
+        balance roundrobin
+        server web-01 26887-web-01 check
+        server web-02 26887-web-02 check
+EOT'
 
-sudo service restart haproxy
+sudo service haproxy restart
