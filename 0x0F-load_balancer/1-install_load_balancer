@@ -3,12 +3,12 @@
 
 sudo apt-get update -y && sudo apt-get upgrade -y
 sudo apt-get install --no-install-recommends software-properties-common -y
-sudo add-apt-repository ppa:vbernat/haproxy-2.6 -y
+sudo add-apt-repository ppa:vbernat/haproxy-2.6
 sudo apt-get install haproxy=2.6.\* -y
 
-sudo bash -c 'cat << EOT >> /etc/default/haproxy
+sudo tee -a /etc/default/haproxy > /dev/null << EOT
 ENABLED=1
-EOT'
+EOT
 
 sudo bash -c 'cat << EOT >> /etc/haproxy/haproxy.cfg
 
@@ -17,8 +17,8 @@ frontend http-in
         default_backend servers
 backend servers
         balance roundrobin
-        server 26887-web-01 54.165.180.170 check
-        server 26887-web-02 54.210.123.212 check
+        server 26887-web-01 54.165.180.170:80 check
+        server 26887-web-02 54.210.123.212:80 check
 EOT'
 
 sudo service haproxy restart
