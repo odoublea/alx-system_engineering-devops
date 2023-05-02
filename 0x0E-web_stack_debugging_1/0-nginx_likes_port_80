@@ -9,13 +9,9 @@ netsat -lpn
 # Discovered Nginx is listening to port 8080 instead of port 80
 # Updated the /etc/nginx/sites-enabled/default to enable Nginx listen on port 80
 sed -i 's|listen 8080 default_server|listen 80|g' /etc/nginx/sites-available/default 
-sed -i 's|listen [::]:8080 default_server|listen [::]:80|g' /etc/nginx/sites-available/default
-
-# Reload config file service nginx reload
-service nginx reload
-
 sed -i 's|listen 8080 default_server|listen 80|g' /etc/nginx/sites-enabled/default
 sed -i 's|listen [::]:8080 default_server|listen [::]:80|g' /etc/nginx/sites-enabled/default
+sed -i 's|listen [::]:8080 default_server|listen [::]:80|g' /etc/nginx/sites-available/default
 
 # Reload config file
 service nginx reload
