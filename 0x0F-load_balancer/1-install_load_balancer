@@ -2,9 +2,8 @@
 # Install and configure HAproxy on load-balancer
 
 sudo apt-get install --no-install-recommends software-properties-common -y
-sudo add-apt-repository ppa:vbernat/haproxy-2.4 -y
 sudo apt-get update -y
-sudo apt-get install haproxy=2.4.\* -y
+sudo apt-get install haproxy
 
 sudo tee -a /etc/default/haproxy > /dev/null << EOT
 ENABLED=1
