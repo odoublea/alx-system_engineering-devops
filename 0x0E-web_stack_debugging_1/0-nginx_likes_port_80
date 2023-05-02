@@ -11,6 +11,9 @@ netsat -lpn
 sed -i 's/listen 8080 default_server/listen 80/g' /etc/nginx/sites-available/default
 sed -i 's/listen [::]:8080 default_server/listen [::]:80/g' /etc/nginx/sites-available/default
 
+# Link sites-available to sites-enabled
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
 # Reload config file
 service nginx reload
 
