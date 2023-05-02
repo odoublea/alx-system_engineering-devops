@@ -11,7 +11,7 @@ netsat -lpn
 new_string="listen 80\nlisten [::]:80"
 sed -i "s|listen 8080 default_server|$new_string|g" /etc/nginx/sites-available/default
 sed -i "s|listen 8080 default_server|$new_string|g" /etc/nginx/sites-enabled/default
-sed -i "s|listen [::]:8080 default_server||g" /etc/nginx/sites-enabled/default
+sed -i "s|listen \[::\]:8080 default_server||g" /etc/nginx/sites-enabled/default
 sed -i "s|ipv6only=on||g" /etc/nginx/sites-available/default
 
 # Reload config file
