@@ -4,15 +4,15 @@
 sudo apt-get update -y
 
 # Checked what port and IP nginx is listening to
-netsat -lpn
+netstat -lpn
 
 # Discovered Nginx is listening to port 8080 instead of port 80
 # Updated the /etc/nginx/sites-enabled/default to enable Nginx listen on port 80
-new_string="listen 80\nlisten [::]:80"
-sed -i "s|listen 8080 default_server|$new_string|g" /etc/nginx/sites-available/default
-sed -i "s|listen 8080 default_server|$new_string|g" /etc/nginx/sites-enabled/default
-sed -i "s|listen \[::\]:8080 default_server||g" /etc/nginx/sites-enabled/default
-sed -i "s|ipv6only=on||g" /etc/nginx/sites-available/default
+new_string="listen 80"
+sed -i "s|listen 8080 default_server|listen 80|g" /etc/nginx/sites-available/default
+sed -i "s|listen 8080 default_server|listen 80|g" /etc/nginx/sites-enabled/default
+sed -i "s|listen \[::\]:8080 default_server ipv6only=on|listen \[::\]:80|g" /etc/nginx/sites-enabled/default
+sed -i "s|listen \[::\]:8080 default_server ipv6only=on|listen \[::\]:80|g" /etc/nginx/sites-available/default
 
 # Reload config file
 service nginx reload
