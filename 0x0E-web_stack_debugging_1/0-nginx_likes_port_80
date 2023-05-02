@@ -15,7 +15,7 @@ sed -i 's|listen [::]:8080 default_server|listen [::]:80|g' /etc/nginx/sites-ava
 service nginx reload
 
 sed -i 's|listen 8080 default_server|listen 80|g' /etc/nginx/sites-enabled/default
-sed -i 's|listen [::]:8080 default_server ipv6only=on|listen [::]:80|g' /etc/nginx/sites-enabled/default
+sed -i 's|listen [::]:8080 default_server|listen [::]:80|g' /etc/nginx/sites-enabled/default
 
 # Reload config file
 service nginx reload
