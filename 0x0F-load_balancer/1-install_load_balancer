@@ -17,8 +17,8 @@ frontend http-in
         default_backend servers
 backend servers
         balance roundrobin
-        server 26887-web-01 54.165.180.170:80 check
-        server 26887-web-02 54.210.123.212:80 check
+        server web-01 54.165.180.170:80 check
+        server web-02 54.210.123.212:80 check
 EOT'
 
 sudo service haproxy restart
