@@ -16,9 +16,8 @@ MY_ID=26887
 
 sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null << EOT
 
-listen $MY_ID-lb-01
-
-frontend http
+frontend http-in
+	listen $MY_ID-lb-01
         bind *:80
         default_backend servers
 backend servers
