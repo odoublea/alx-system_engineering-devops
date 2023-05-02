@@ -15,13 +15,9 @@ MY_ID=26887
 
 sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null << EOT
 
-frontend http-in
-	listen $MY_ID-lb-01
+listen	$MY_ID-lb-01
         bind *:80
-        default_backend servers
-backend servers
         balance roundrobin
-	mode http
         server $MY_ID-web-01 54.165.180.170:80 check
         server $MY_ID-web-02 54.210.123.212:80 check
 EOT
