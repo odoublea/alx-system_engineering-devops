@@ -2,8 +2,6 @@
 # Investigating why Nginx is not runnig on port 80
 
 # Checked what port and IP nginx is listening to
-netstat -lpn
-
 # Discovered Nginx is listening to port 8080 instead of port 80
 # Updated the /etc/nginx/sites-enabled/default to enable Nginx listen on port 80
 sed -i "s|8080|80|g" /etc/nginx/sites-enabled/default
