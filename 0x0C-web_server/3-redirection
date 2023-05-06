@@ -1,27 +1,7 @@
 #!/usr/bin/env bash
-# Configure your Nginx server so that /redirect_me is redirecting to another page.
-
-sudo apt update && sudo apt upgrade -y
-sudo apt-get install -y nginx
-
-# Create an index.html file
+# Script that installs Nginx server and redirects /redirect_me
+sudo apt-get -y update
+sudo apt-get -y install nginx
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
-# Configure Redirect_me/
-sudo tee -i /etc/nginx/sites-available/default > /dev/null << EOF 
-server {
-	# Redirect to HTTPS
-	listen	80;
-	listen	[::]:80 default_server;
-	root	/etc/nginx/html;
-	
-	location /redirect_me {
-		return 301 https://github.com/odoublea;
-	}
-EOF
-
-# Link site-available to site-enabled
-# ln -s /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
-
-#Restart Nginx server
-sudo service nginx restart
+sudo sed -i "s|server_name _;|server_name _;\n\tlocation /redirect_me {\n\t\t return 301 https:\/\/www.github.com\/odoublea;\n\t}|" /etc/nginx/sites-available/default
+sudo service nginx start
