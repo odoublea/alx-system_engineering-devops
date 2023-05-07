@@ -13,7 +13,8 @@ sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.original
 
 MY_ID=26887
 
-echo "frontend http-in
+echo "listen $MY_ID-lb-01
+frontend http-in
     bind *:80
     default_backend webservers
 
