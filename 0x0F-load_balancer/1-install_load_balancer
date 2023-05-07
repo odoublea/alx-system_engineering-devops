@@ -13,8 +13,8 @@ sudo echo "
 listen www 
     bind :80
     balance roundrobin
-    server $MY_ID-web-01 54.165.180.170:8000 check
-    server $MY_ID-web-02 54.210.123.212:8000 check
+    server $MY_ID-web-01 54.165.180.170:80 check
+    server $MY_ID-web-02 54.210.123.212:80 check
 " >> /etc/haproxy/haproxy.cfg
 
 sudo service haproxy restart
