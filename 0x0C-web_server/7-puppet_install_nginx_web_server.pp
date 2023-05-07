@@ -11,12 +11,12 @@ class nginx {
       server {
         listen 80;
         server_name _;
-	error_page 404 /404.html
+	error_page 404 /404.html;
         location / {
           return 200 'Hello World!';
         }
         location /redirect_me {
-          return 301 /new_location;
+          return 301 https://www.github.com/odoublea;
         }
       }
     ",
