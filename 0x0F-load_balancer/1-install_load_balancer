@@ -5,18 +5,17 @@ sudo add-apt-repository ppa:vbernat/haproxy-2.6 -y
 sudo apt-get install haproxy=2.6.\* -y
 sudo apt-get update -y
 
-sudo tee -a /etc/default/haproxy > /dev/null << EOT
-ENABLED=1
-EOT
+sudo sed -i "s/ENABLED=0/ENABLED=1" /etc/default/haproxy
 
 sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.original
 
 MY_ID=26887
 
-echo "listen $MY_ID-lb-01
+sudo echo "listen $MY_ID-lb-01
     bind *:80
     balance roundrobin
     server $MY_ID-web-01 54.165.180.170:80 check
-    server $MY_ID-web-02 54.210.123.212:80 check" >> /etc/haproxy/haproxy.cfg
+    server $MY_ID-web-02 54.210.123.212:80 check
+" >> /etc/haproxy/haproxy.cfg
 
 sudo service haproxy restart
