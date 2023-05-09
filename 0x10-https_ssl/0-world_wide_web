@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Function to display information about subdomain
+display_info() {
+    domain=$1
+    subdomain=$2
+    record_type="A"
+    destination=$(dig +short "$subdomain.$domain")
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Check number of arguments
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
+fi
+
+domain=$1
+
+# Check if subdomain argument is provided
+if [ "$#" -eq 2 ]; then
+    subdomain=$2
+    display_info $domain $subdomain
+else
+    # Display information for default subdomains
+    for subdomain in www lb-01 web-01 web-02; do
+        display_info $domain $subdomain
+    done
+fi
