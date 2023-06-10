@@ -3,9 +3,10 @@
 
 # Checked what port and IP nginx is listening to
 # Discovered Nginx is listening to port 8080 instead of port 80
-# Updated the /etc/nginx/sites-enabled/default to enable Nginx listen on port 80
-sed -i "s|8080|80|g" /etc/nginx/sites-enabled/default
-sed -i "s|listen \[::\]:8080 default_server ipv6only=on;|listen \[::\]:80 default_server;|" /etc/nginx/sites-enabled/default
+# Removed current settings
+rm /etc/nginx/sites-enabled/default
+# Link to Nginx default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 # Restart nginx
 sudo ufw allow 'Nginx HTTP'
 service nginx restart
