@@ -23,10 +23,9 @@ Module Usage Example:
 """
 
 import requests
-from sys import argv
 import json
 
-
+# if __name__ == '__main__':
 def top_ten(subreddit):
     """
     Retrieve information about the top 10 hot posts in a given subreddit.
@@ -55,7 +54,9 @@ def top_ten(subreddit):
         data = json.loads(response.content)
 
         posts = data["data"]["children"]
+        print(posts)
 
+        print(f"Top 10 hot posts in r/{subreddit}:\n")
         for post in posts:
             title = post["data"]["title"]
             print(title)
@@ -64,7 +65,4 @@ def top_ten(subreddit):
     else:
         return 0  # Subreddit not found
 
-
-if __name__ == '__main__':
-    subreddit = argv[1]
-    top_ten(subreddit)
+# top_ten(subreddit)

@@ -11,8 +11,10 @@ echo "
 listen $MY_ID-lb-01
         bind *:80
         balance roundrobin
-        server $MY_ID-web-01 54.224.38.225:80 check
-        server $MY_ID-web-02 52.91.119.242:80 check
+        server $MY_ID-web-01 100.26.212.254:80 check
+        server $MY_ID-web-02 52.86.96.84:80 check
 " | sudo tee -a /etc/haproxy/haproxy.cfg
+
+sudo sed -i "s/ENABLED=0/ENABLED=1/" /etc/default/haproxy
 
 sudo service haproxy restart
