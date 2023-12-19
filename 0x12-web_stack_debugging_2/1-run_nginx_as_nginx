@@ -4,8 +4,8 @@
 sudo service nginx stop
 
 # Edit nginx.conf file to set user and listen directives
-sudo sed -i 's/user www-data/user nginx/' /etc/nginx/nginx.conf
-sudo sed -i 's/listen 80 default_server/listen 8080 default_server/' /etc/nginx/sites-available/default
+sed -i 's/user www-data/user nginx/' /etc/nginx/nginx.conf
+sed -i 's/listen 80 default_server/listen 8080 default_server/' /etc/nginx/sites-available/default
 
-# Restart nginx service
-sudo -u nginx service nginx start
+# Restart nginx service as nginx
+service nginx start
