@@ -21,13 +21,17 @@ if __name__ == '__main__':
         print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
         exit(1)
 
+    if not argv[1].isdigit():
+        print("Employee id must be an integer")
+        exit(1)
+
     employee_id = argv[1]
 
-    url = 'https://jsonplaceholder.typicode.com/users/{}'.format(employee_id)
+    url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
     response = requests.get(url)
     employee_name = response.json().get('name')
 
-    url = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(employee_id)
+    url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
     response2 = requests.get(url)
     tasks = response2.json()
 
@@ -35,8 +39,7 @@ if __name__ == '__main__':
     completed_tasks = [task for task in tasks if task.get('completed')]
     completed = len(completed_tasks)
 
-    text = 'Employee {} is done with tasks({}/{}):'.format(
-        employee_name, completed, total_tasks)
-    print(text)
+    print(f'Employee {employee_name} is done with tasks('
+          f'{completed}/{total_tasks}):')
     for task in completed_tasks:
         print(f'\t {task.get("title")}')
