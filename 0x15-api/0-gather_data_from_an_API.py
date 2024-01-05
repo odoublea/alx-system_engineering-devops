@@ -12,17 +12,21 @@ if __name__ == '__main__':
         print("Usage: ./0-gather_data_from_an_API.py <employee_id>")
         exit(1)
 
-    user = argv[1]
+    employee_id = argv[1]
 
-    response = requests.get(f'https://jsonplaceholder.typicode.com/users/{user}')
-    name = response.json().get('name')
-    response2 = requests.get(f'https://jsonplaceholder.typicode.com/users/{user}/todos')
-    completed = 0
-    task_title = []
-    for _ in response2.json():
-        if _.get('completed') is True:
-            task_title.append(_.get('title'))
-            completed += 1
-    print(f'Employee {name} is done with tasks({completed}/{len(response2.json())}):')
-    for _ in task_title:
-        print('\t {}'.format(_))
+    url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+    response = requests.get(url)
+    employee_name = response.json().get('name')
+
+    url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+    response2 = requests.get(url)
+    tasks = response2.json()
+
+    total_tasks = len(tasks)
+    completed_tasks = [task for task in tasks if task.get('completed')]
+    completed = len(completed_tasks)
+
+    print(f'Employee {employee_name} is done with tasks('
+          f'{completed} / {total_tasks}): ')
+    for task in completed_tasks:
+        print(f'\t {task.get("title")}')
