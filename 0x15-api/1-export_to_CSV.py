@@ -31,6 +31,7 @@ if __name__ == '__main__':
     url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
     response = requests.get(url)
     employee_name = response.json().get('name')
+    employee_username = response.json().get('username')
 
     url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
     response2 = requests.get(url)
@@ -44,9 +45,9 @@ if __name__ == '__main__':
           f'{completed}/{total_tasks}):')
     for task in completed_tasks:
         print(f'\t {task.get("title")}')
-        
+
     with open('{}.csv'.format(employee_id), 'w') as csvfile:
         taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in tasks:
-            taskwriter.writerow([employee_id, employee_name,
+            taskwriter.writerow([employee_id, employee_username,
                                  task.get('completed'), task.get('title')])
