@@ -55,6 +55,6 @@ if __name__ == '__main__':
 
     with open(f'{employee_id}.json', 'w') as jsonfile:
         json.dump({employee_id: [{'task': task.get('title'),
-                                   'completed': task.get('completed'),
-                                   'username': employee_username}
-                                  for task in tasks]}, jsonfile)
+                                  'completed': task.get('completed'),
+                                  'username': employee_username}
+                                 for task in tasks]}, jsonfile)
