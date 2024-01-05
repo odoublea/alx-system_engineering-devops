@@ -14,6 +14,7 @@ Second and N next lines display the title of completed tasks: TASK_TITLE
 """
 
 import csv
+import json
 import requests
 from sys import argv, exit
 
@@ -46,8 +47,15 @@ if __name__ == '__main__':
     for task in completed_tasks:
         print(f'\t {task.get("title")}')
 
-    with open('{}.csv'.format(employee_id), 'w') as csvfile:
+    with open(f'{employee_id}.csv', 'w') as csvfile:
         taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in tasks:
             taskwriter.writerow([employee_id, employee_username,
                                  task.get('completed'), task.get('title')])
+    
+    with open(f'{employee_id}.json', 'w') as jsonfile:
+        json.dump({employee_id: [{'task': task.get('title'),
+                                   'completed': task.get('completed'),
+                                   'username': employee_username}
+                                  for task in tasks]}, jsonfile)
+    
